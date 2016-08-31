@@ -142,6 +142,7 @@
 		var mousePosition;
 		var lastMousePosition = null;
 
+
 		colorChoice.addEventListener('change', function(event){
 			color = colorChoice.value;
 			console.log(color);
@@ -197,12 +198,25 @@
 					thickness: thickness
 				}
 
+				socketio.emit('drawing_to_server', drawingData);
+
 				lastMousePosition = {
 					x: mousePosition.x,
 					y: mousePosition.y
 				};
 			}
 		})
+
+		socketio.on('drawing_to_client', function(drawingData){
+			context.strokeStyle - drawingData.color;
+			context.lineJoin = "round";
+			context.lineWidth = drawingData.thickness;
+			context.beginPath();
+			context.moveTo(drawingData.lastMousePosition.x,drawingData.lastMousePosition.y);
+			context.lineTo(drawingData.mousePosition.x,drawingData.mousePosition.y);
+			context.closePath();
+			context.stroke();
+		});
 
 </script>
 
