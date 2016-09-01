@@ -23,6 +23,8 @@ var socketIo = require('socket.io');
 // listen to the server which is listening on port XXXX
 var io = socketIo.listen(server);
 var socketUsers = [];
+var chatHistory = [];
+var currentCanvas = [];
 //We need to deal with a new socket connection
 io.sockets.on('connect', function(socket){
 	// console.log(socket);
