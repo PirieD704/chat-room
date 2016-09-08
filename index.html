@@ -56,7 +56,7 @@
 		var name = prompt('What is your name?');
 		// console.log(io)
 		// var socketio = io.connect('http://10.150.51.230:8080');
-		var socketio = io.connect('http://127.0.0.1:8005');		
+		var socketio = io.connect('http://54.245.145.64:8005');		
 		socketio.emit('name_to_server',name);
 
 		socketio.on('message_to_client', function(data){
