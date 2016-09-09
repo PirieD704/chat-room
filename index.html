@@ -29,13 +29,13 @@
 			overflow: scroll;
 		}
 		#chats{
-			height:  150px;
+			height:  225px;
 			border:  2px solid blue;
 			border-radius: 4px;
 			overflow: scroll;
 		}
 		#chatUsers{
-			height:  150px;
+			height:  225px;
 			border:  2px solid red;
 			border-radius: 4px;
 
@@ -47,6 +47,15 @@
 			border-radius: 4px;
 			margin: auto;
 		}
+		.me{
+			text-align: left;
+			color:  blue;
+		}
+
+		.others{
+			text-align: right;
+			color:  red;
+		}
 
 	</style>
 
@@ -57,10 +66,14 @@
 		// console.log(io)
 		// var socketio = io.connect('http://10.150.51.230:8080');
 		var socketio = io.connect('http://54.245.145.64:8005');		
-		socketio.emit('name_to_server',name);
+		socketio.emit('name_to_server', name);
 
 		socketio.on('message_to_client', function(data){
-			document.getElementById('chats').innerHTML += '<div class="im">' + data.message +' -- '+data.name +' -- ' +data.date+ '</div>';
+			if(data.name === name){
+				document.getElementById('chats').innerHTML += '<div class="me"><div class="im-me">' + data.message + '</div><div class="info-text"><span class="im-name-me">'+ data.name + '</span>--' + data.date + '</div></div>';
+			}else{
+				document.getElementById('chats').innerHTML += '<div class="others"><div class="im-others">' + data.message + '</div></ br><div class="info-text"><span class="im-name-others">'+ data.name + '</span>--' + data.date + '</div></div>';
+			}
 		});
 
 		socketio.on('users', function(socketUsers){
@@ -173,9 +186,9 @@
 				var magicBrushX = event.pageX - 45;
 				var magicBrushY
 				if(pixels > 991){
-					magicBrushY = event.pageY - 301;
+					magicBrushY = event.pageY - 376;
 				}else{
-					magicBrushY = event.pageY - 451;
+					magicBrushY = event.pageY - 601;
 				}
 				// console.log(magicBrushX);
 				// console.log(magicBrushY);
