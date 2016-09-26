@@ -232,7 +232,7 @@
 		})
 
 		socketio.on('drawing_to_client', function(drawingData){
-			context.strokeStyle - drawingData.color;
+			context.strokeStyle = drawingData.color;
 			context.lineJoin = "round";
 			context.lineWidth = drawingData.thickness;
 			context.beginPath();
