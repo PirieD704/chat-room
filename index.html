@@ -12,6 +12,8 @@
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
+	<link rel="stylesheet" href="public/stylesheets/styles.css">
+
 	<!-- Includ jquery because bootstrap needs it -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
@@ -20,109 +22,35 @@
 
 <!-- 	<script src="node_modules/angular/angular.js"></script>
  -->
-	<style type="text/css" media="screen">
-		.wrapper{
-			text-align: center;
-			margin: auto;
-			display: inline-block;
-			margin-top: 30px;
-			overflow: scroll;
-		}
-		#chats{
-			height:  225px;
-			border:  2px solid blue;
-			border-radius: 4px;
-			overflow: scroll;
-		}
-		#chatUsers{
-			height:  225px;
-			border:  2px solid red;
-			border-radius: 4px;
-
-		}
-		.canvas-wrapper{
-		}
-		#canvas{
-			border: 2px solid green;
-			border-radius: 4px;
-			margin: auto;
-		}
-		.me{
-			text-align: left;
-			color:  blue;
-		}
-
-		.others{
-			text-align: right;
-			color:  red;
-		}
-
-	</style>
 
 <!-- 	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
- --><script src="https://cdn.socket.io/socket.io-1.0.0.js"></script>
-
-	<script type="text/javascript">
-		var name = prompt('What is your name?');
-		// console.log(io)
-		// var socketio = io.connect('http://10.150.51.230:8080');
-		var socketio = io.connect('http://54.245.145.64:8005');		
-		socketio.emit('name_to_server', name);
-
-		socketio.on('message_to_client', function(data){
-			if(data.name === name){
-				document.getElementById('chats').innerHTML += '<div class="me"><div class="im-me">' + data.message + '</div><div class="info-text"><span class="im-name-me">'+ data.name + '</span>--' + data.date + '</div></div>';
-			}else{
-				document.getElementById('chats').innerHTML += '<div class="others"><div class="im-others">' + data.message + '</div></ br><div class="info-text"><span class="im-name-others">'+ data.name + '</span>--' + data.date + '</div></div>';
-			}
-		});
-
-		socketio.on('users', function(socketUsers){
-			var newHTML = "";
-			console.log(socketUsers);
-			for(var i=0; i<socketUsers.length; i++){
-				console.log(socketUsers[i].name);
-				newHTML += '<li class="user">'+socketUsers[i].name+'</li>';
-			}
-			document.getElementById('chatUsers').innerHTML = newHTML;
-		});
-
-		function sendMessage(){
-			var date = new Date().toLocaleString();
-			var message = document.getElementById('message').value;
-			socketio.emit("message_to_server", {message: message, name: name, date: date});
-		}
-		function sendName(){
-			name = document.getElementById('nameInput').value;
-			socketio.emit('name_to_server',name);
-		}
-
-		
-
-	</script>
+ -->
 
 </head>
 <body ng-controller="myController">
 	<div class="container-fluid">
-		<h1>chat room</h1>
+		<h1>Pictionary Chat Room!</h1>
+		<h4>Invite friends and play in a real-time game of pictionary! (drawing skills not included)</h4>
 		<div class="header-wrapper">
 			<div id="name">
 				<input type="text" id="nameInput">
-				<button onclick="sendName()">Submit name</button>
+				<button onclick="sendName()">Change Name</button>
 			</div>
 
 			<div id="chat-window">
 				<input type="text" id="message" placeholder="Your message here">
-				<button onclick="sendMessage()">Click here to send message!</button>
+				<button id="message-button" onclick="sendMessage()">Click here to send message!</button>
 			</div>
-			<div id="chatUsers" class="col-md-2">
-				<ul>
-					<!-- <li ng-repeat="userNames">{{name}}</li> -->
-				</ul>
+			<div class="col-xs-12 chat-box-wrapper">
+				<div id="chatUsers" class="col-xs-2">
+					<ul>
+					</ul>
+				</div>
+				<div id="chats" class="col-md-6 col-sm-7 col-xs-9"></div>
 			</div>
-			<div id="chats" class="col-md-6"></div>
 		</div>
 		<div class="col-md-12 wrapper">
+			<div><h3>Draw here!</h3></div>
 			<div class="col-md-4 canvas-wrapper">
 				<canvas id="canvas" width='600px' height='400px'></canvas>
 				<div id="tool-bar">
@@ -134,121 +62,9 @@
 			</div>
 		</div>
 	</div>
-<!-- 	<div class="col-md-4">
-		<canvas id="canvas"></canvas>
-		<div id="tool-bar">
-			<input type="color" id="color-picker">
-			<label>Choose your thickness</label>
-			<input type="number" id="thickness-picker" placeholder="10">
-		</div>
-	</div> -->
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-<script type="text/javascript">
-	var myApp = angular.module('myApp', []);
-	myApp.controller('myController', function($scope){
-		$scope.message = "test";
-	})
-
-	var canvas = document.getElementById('canvas');
-		var context = canvas.getContext('2d');
-		var mouseDown = false;
-		var color = '#000';
-		var thickness = 1;
-		var colorChoice = document.getElementById('color-picker');
-		var mousePosition;
-		var lastMousePosition = null;
-
-
-		colorChoice.addEventListener('change', function(event){
-			color = colorChoice.value;
-			console.log(color);
-		})
-
-		var thicknessPicker = document.getElementById('thickness-picker');
-		thicknessPicker.addEventListener('change', function(event){
-			thickness = thicknessPicker.value;
-			console.log(thickness);
-		})
-
-		canvas.addEventListener('mousedown', function(event){
-			mouseDown = true;
-		})
-
-		canvas.addEventListener('mouseup', function(event){
-			mouseDown = false;
-			lastMousePosition = null;
-		})
-
-		canvas.addEventListener('mousemove', function(event){
-			var pixels = window.innerWidth;
-			console.log(pixels);
-
-			if(mouseDown){
-				var magicBrushX = event.pageX - 45;
-				var magicBrushY
-				if(pixels > 991){
-					magicBrushY = event.pageY - 376;
-				}else{
-					magicBrushY = event.pageY - 601;
-				}
-				// console.log(magicBrushX);
-				// console.log(magicBrushY);
-
-				console.dir(canvas);
-
-				mousePosition = {
-					x: magicBrushX,
-					y: magicBrushY
-				}
-				console.log(mousePosition);
-
-				if(lastMousePosition !== null){
-					context.strokeStyle = color;
-					context.lineJoin = 'round';
-					context.lineWidth = thickness;
-					context.beginPath();
-					context.moveTo(lastMousePosition.x, lastMousePosition.y);
-					context.lineTo(mousePosition.x, mousePosition.y);
-					// context.moveTo(0, 0);
-					// context.lineTo(50, 50);
-					context.closePath();
-					context.stroke();
-				}
-
-				var drawingData = {
-					mousePosition: mousePosition,
-					lastMousePosition: lastMousePosition,
-					color: color,
-					thickness: thickness
-				}
-
-				socketio.emit('drawing_to_server', drawingData);
-
-				lastMousePosition = {
-					x: mousePosition.x,
-					y: mousePosition.y
-				};
-			}
-		})
-
-		socketio.on('drawing_to_client', function(drawingData){
-			context.strokeStyle = drawingData.color;
-			context.lineJoin = "round";
-			context.lineWidth = drawingData.thickness;
-			context.beginPath();
-			context.moveTo(drawingData.lastMousePosition.x,drawingData.lastMousePosition.y);
-			context.lineTo(drawingData.mousePosition.x,drawingData.mousePosition.y);
-			context.closePath();
-			context.stroke();
-		});
-
-		function clearBoard(){
-			context.clearRect(0,0,600,400);
-		}
-
-
-</script>
-
+	<script src="https://cdn.socket.io/socket.io-1.0.0.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+	<script type="text/javascript" src="js/scripts.js"></script>
 </body>
 </html>
 

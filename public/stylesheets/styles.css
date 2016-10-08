@@ -1,0 +1,63 @@
+/* line 23, ../../compass/sass/styles.sass */
+body {
+  background: #89e2f4;
+}
+/* line 25, ../../compass/sass/styles.sass */
+body h1 {
+  color: #fff;
+}
+
+/* line 30, ../../compass/sass/styles.sass */
+.header-wrapper input {
+  border-radius: 6px;
+}
+/* line 32, ../../compass/sass/styles.sass */
+.header-wrapper button {
+  border-radius: 6px;
+  background: #eee;
+}
+
+/* line 36, ../../compass/sass/styles.sass */
+.wrapper {
+  text-align: left;
+  margin: auto;
+  display: inline-block;
+  overflow: scroll;
+}
+
+/* line 43, ../../compass/sass/styles.sass */
+#chats {
+  height: 225px;
+  border: 1px solid black;
+  border-radius: 4px;
+  overflow: scroll;
+  background: #fff;
+}
+
+/* line 50, ../../compass/sass/styles.sass */
+#chatUsers {
+  height: 225px;
+  border: 1px solid black;
+  border-radius: 4px;
+  background: #fff;
+}
+
+/* line 57, ../../compass/sass/styles.sass */
+#canvas {
+  border: 2px solid green;
+  border-radius: 4px;
+  margin: auto;
+  background: #fff;
+}
+
+/* line 64, ../../compass/sass/styles.sass */
+.me {
+  text-align: left;
+  color: blue;
+}
+
+/* line 68, ../../compass/sass/styles.sass */
+.others {
+  text-align: right;
+  color: red;
+}
