@@ -32,10 +32,10 @@ function sendName(){
 	socketio.emit('name_to_server',name);
 }
 
-	var myApp = angular.module('myApp', []);
-	myApp.controller('myController', function($scope){
-		$scope.message = "test";
-	})
+var myApp = angular.module('myApp', []);
+myApp.controller('myController', function($scope){
+	$scope.message = "test";
+})
 
 var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
