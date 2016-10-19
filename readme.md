@@ -9,6 +9,9 @@ Built using:
 * HTML/CSS/SASS
 * Bootstrap
 
+Here is a link to a live version of the app if you would like to explore it:
+[chat-room](http://davidapirie.com/chat-room/)
+
 ###Socket and Javascript Functionalities
 Sockets.io requires the implementation of the sockets module which can be found in npm or you can use the CDN. Make sure that when the io.connect is declared that it is pointing at the proper port for the given ip address that you will be hosting the site on. Three parts of the page require the use of socket.io: the username-display area, the text-display area, and the canvas area. Input of name or text work largely the same and run functions on submit sendName() and sendMessage() respectively. Those functions use the emit method from socket to send packaged json to the specific socket for the given user and update their information.
 
